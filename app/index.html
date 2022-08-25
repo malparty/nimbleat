@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Nimbleat is an experimental instrument based on the Web Audio API" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎹 Nimbleat 🎵</title>
+
+    <script src="dist/index.js"></script>
+    <link rel="stylesheet" href="dist/styles.css" />
+  </head>
+  <body>
+    <h1 class="text-3xl font-bold underline">🎹 Nimbleat 🎵</h1>
+    <div class="m-4">
+      <label for="start_toggle" class="inline-flex relative items-center cursor-pointer">
+        <input type="checkbox" value="" id="start_toggle" class="sr-only peer">
+        <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">ON/OFF</span>
+      </label>
+    </div>
+    <div class="m-4">
+      <label for="attack">Attack</label>
+      <input name="attack" disabled id="attack" type="range" min="0" max="1" value="0.2" step="0.05" />
+
+      <label for="sustain">Sustain</label>
+      <input name="sustain" disabled id="sustain" type="range" min="0" max="10" value="2" step="0.5" />
+
+      <label for="release">Release</label>
+      <input name="release" disabled id="release" type="range" min="0" max="1" value="0.5" step="0.05" />
+    </div>
+    <div class="m-4">
+      <button name="play_btn" disabled id="play_btn" class="btn btn-primary" type="button">Play!</button>
+    </div>
+  </body>
+</html>
