@@ -1,1 +1,2 @@
 import './synth'
+import './base'
