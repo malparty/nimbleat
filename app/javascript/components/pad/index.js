@@ -6,7 +6,7 @@ const CLASS_NAMES = {
 
 const template = document.createElement('template');
 template.innerHTML = `
-  <div class="p-4 rounded-sm w-24 h-24 bg-accent-content text-accent hover:text-secondary hover:bg-secondary-content active:text-neutral active:bg-neutral-content">
+  <div class="p-4 rounded w-24 h-24 bg-accent-content text-accent hover:text-secondary hover:bg-secondary-content active:text-neutral active:bg-neutral-content">
     <div class="pad__text"></div>
   </div>
 `;
