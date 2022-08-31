@@ -61,7 +61,7 @@ class Pad {
   }
 
   _addEventListeners() {
-    this.pad.addEventListener('click', this.onPadClicked);
+    this.pad.addEventListener('mousedown', this.onPadClicked);
   }
 }
 
