@@ -9,9 +9,9 @@ template.innerHTML = `
 <div class="py-5 flex items-center justify-center space-x-8">
 <div id="drop-area" class="relative w-72 h-72 bg-purple-300 rounded-full flex justify-center items-center text-center p-5 shadow-xl">
   <form class="my-form">
-    <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
     <label class="button" for="fileElem">Select your Music</label>
   </form>
+  <div class="jog-display__text"></div>
 </div>
 </div>
 `;
@@ -66,11 +66,12 @@ class JogDisplay {
   }
 
   _addEventListeners() {
+    this.jogDisplay.addEventListener('mousedown', this.onJogDisplayClicked);
     let dropArea = document.getElementById('drop-area');
-    dropArea.addEventListener('dragenter', handlerFunction, false);
-    dropArea.addEventListener('dragleave', handlerFunction, false);
-    dropArea.addEventListener('dragover', handlerFunction, false);
-    dropArea.addEventListener('drop', handlerFunction, false);
+    // dropArea.addEventListener('dragenter', handlerFunction, false);
+    // dropArea.addEventListener('dragleave', handlerFunction, false);
+    // dropArea.addEventListener('dragover', handlerFunction, false);
+    // dropArea.addEventListener('drop', handlerFunction, false);
     this.jogDisplay.addEventListener('mousedown', this.onJogDisplayClicked);
   }
 
