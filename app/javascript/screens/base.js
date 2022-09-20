@@ -19,7 +19,7 @@ template.innerHTML = `
   <div class="m-4 w-fit">
     <div class="flex">
       <div class="pad pad--option flex-2" id="pad_mode">Mode</div>
-      <div class="flex-1 w-48">
+      <div class="flex-1 w-48 px-4 py-2 m-2 rounded-full font-mono font-medium leading-none text-sm text-center text-primary bg-primary-content">
         <div id="display_mode">Mode...</div>
         <div id="display_instrument">Instrument...</div>
       </div>
