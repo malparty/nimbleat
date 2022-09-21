@@ -1,9 +1,11 @@
 import Pad, { DEFAULT_SELECTOR as PAD_SELECTOR } from '../components/pad/';
-import soundEngines from '../sound-engines';
+import getSoundEngines from '../sound-engines';
 import { KeyMap } from '../utilities/keyMap';
+import { chromatic } from '../utilities/scales';
 
 const SELECTORS = {
   screen: '#base-screen',
+  startButton: '.start-button',
 
   playPad: `${PAD_SELECTOR}.pad--play`,
 
@@ -13,6 +15,15 @@ const SELECTORS = {
   displayMode: '#display_mode',
   displayInstrument: '#display_instrument'
 };
+
+const splash = document.createElement('template');
+splash.innerHTML = `
+  <div class="m-4 w-fit">
+    <button class="btn btn-primary start-button">
+      Click to start!
+    </div>
+  </div>
+`;
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -56,6 +67,23 @@ class BaseScreen {
   constructor() {
     this.baseScreen = document.querySelector(SELECTORS.screen) ?? new Element();
 
+    // Insert HTML content from splash screen
+    this.baseScreen.appendChild(splash.content.cloneNode(true));
+
+    this.startButton = document.querySelector(SELECTORS.startButton);
+
+    this._bind();
+    this._addSplashEventListeners();
+  }
+
+  onKeyDown(e) {
+    const padId = KeyMap[e.key];
+    if (padId !== undefined) {
+      this.pads[KeyMap[e.key]].onPadClicked();
+    }
+  }
+
+  onStart() {
     // Insert HTML content from template
     this.baseScreen.appendChild(template.content.cloneNode(true));
 
@@ -65,18 +93,10 @@ class BaseScreen {
     this.displayInstrument = document.querySelector(SELECTORS.displayInstrument);
     this.displayMode = document.querySelector(SELECTORS.displayMode);
 
-    this.soundEngines = soundEngines;
+    this.soundEngines = getSoundEngines();
 
-    this._bind();
     this._setup();
     this._addEventListeners();
-  }
-
-  onKeyDown(e) {
-    const padId = KeyMap[e.key];
-    if (padId !== undefined) {
-      this.pads[KeyMap[e.key]].onPadClicked();
-    }
   }
 
   padModeOnClick() {
@@ -102,6 +122,7 @@ class BaseScreen {
   // Private
 
   _bind() {
+    this.onStart = this.onStart.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.padModeOnClick = this.padModeOnClick.bind(this);
     this.padInstrumentOnClick = this.padInstrumentOnClick.bind(this);
@@ -124,6 +145,10 @@ class BaseScreen {
     this._refreshDisplays();
   }
 
+  _addSplashEventListeners() {
+    this.startButton.addEventListener('click', this.onStart);
+  }
+
   _addEventListeners() {
     document.addEventListener('keydown', this.onKeyDown);
     this.padMode.addEventListener('click', this.padModeOnClick);
@@ -131,8 +156,8 @@ class BaseScreen {
   }
 
   _onPadPlayed(padIndex) {
-    console.log(this.currentSoundEngine);
-    this.currentSoundEngine.onPadPressed(padIndex);
+    // Handle Scales here (and add frequency as second arg)
+    this.currentSoundEngine.onPadPressed(padIndex, chromatic[padIndex]);
   }
 
   _refreshDisplays() {
