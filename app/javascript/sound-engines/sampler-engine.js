@@ -11,6 +11,10 @@ class SamplerEngine {
       name: 'Drum',
       path: 'assets/samples/drum.wav',
     },
+    {
+      name: 'Girl Scream',
+      path: 'assets/samples/girl-scream.wav',
+    },
   ];
 
   constructor() {
