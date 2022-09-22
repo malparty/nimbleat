@@ -1,16 +1,22 @@
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+
 class SamplerEngine {
   currentInstrumentIndex = -1;
   instruments = [
     {
       name: 'Piano',
-      path: 'assets/sample.wav',
+      path: 'assets/samples/piano.wav',
+    },
+    {
+      name: 'Drum',
+      path: 'assets/samples/drum.wav',
     },
   ];
 
   constructor() {
     this.name = 'Sampler';
-    this.changeInstrument();
     this.audioCtx = new AudioContext();
+    this.changeInstrument();
   }
 
   onPadPressed(padIndex) {
@@ -35,9 +41,9 @@ class SamplerEngine {
   _play(rate) {
     if (this.sample == null) return;
 
-    const context = new AudioContext();
+    const context = this.audioCtx;
     const source = context.createBufferSource();
-    const time = this.audioCtx.currentTime;
+    const time = context.currentTime;
     source.buffer = this.sample;
     source.playbackRate.value = rate;
     source.connect(context.destination);
