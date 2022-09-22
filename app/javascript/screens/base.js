@@ -1,4 +1,5 @@
 import Pad, { DEFAULT_SELECTOR as PAD_SELECTOR } from '../components/pad/';
+import { KeyMap } from '../utilities/keyMap';
 
 const SELECTORS = {
   screen: '#base-screen'
@@ -48,9 +49,18 @@ class BaseScreen {
     this._addEventListeners();
   }
 
+  onKeyDown(e) {
+    const padId = KeyMap[e.key];
+    if (padId !== undefined) {
+      this.pads[KeyMap[e.key]].onPadClicked();
+    }
+  }
+
   // Private
 
-  _bind() {}
+  _bind() {
+    this.onKeyDown = this.onKeyDown.bind(this);
+  }
 
   _setup() {
     this.pads = this.padsElements.map((padElement, i) => {
@@ -64,7 +74,9 @@ class BaseScreen {
     });
   }
 
-  _addEventListeners() {}
+  _addEventListeners() {
+    document.addEventListener('keydown', this.onKeyDown);
+  }
 
   _onPadPlayed(padIndex) {
     console.log(`Pad ${padIndex} pushed!`);

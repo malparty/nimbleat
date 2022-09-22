@@ -1,0 +1,4 @@
+.pad > .pad--pressed {
+  @apply text-neutral bg-neutral-content;
+  @apply hover:text-neutral hover:bg-neutral-content;
+}

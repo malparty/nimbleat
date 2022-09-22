@@ -1,12 +1,13 @@
 export const DEFAULT_SELECTOR = '.pad';
 
 const CLASS_NAMES = {
+  containerElement: '.pad__container',
   textElement: '.pad__text'
 };
 
 const template = document.createElement('template');
 template.innerHTML = `
-  <div class="p-4 rounded w-24 h-24 bg-accent-content text-accent hover:text-secondary hover:bg-secondary-content active:text-neutral active:bg-neutral-content">
+  <div class="pad__container p-4 rounded w-24 h-24 bg-accent-content text-accent hover:text-secondary hover:bg-secondary-content active:text-neutral active:bg-neutral-content">
     <div class="pad__text"></div>
   </div>
 `;
@@ -18,6 +19,7 @@ class Pad {
     // Insert HTML content from template
     this.pad.appendChild(template.content.cloneNode(true));
 
+    this.padContainer = this.pad.querySelector(CLASS_NAMES.containerElement) ?? new Element();
     this.textElement = this.pad.querySelector(CLASS_NAMES.textElement) ?? new Element();
 
     this._bind();
@@ -29,6 +31,10 @@ class Pad {
 
   onPadClicked() {
     this._onPlayedCallback();
+    this.padContainer.classList.add('pad--pressed');
+    setTimeout(() => {
+      this.padContainer.classList.remove('pad--pressed');
+    }, 200);
   }
 
   // Object interface for external usage
