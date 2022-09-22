@@ -1,3 +1,18 @@
+.pad {
+  @apply p-4 rounded bg-accent-content text-accent;
+  @apply hover:text-secondary hover:bg-secondary-content;
+  @apply active:text-neutral active:bg-neutral-content;
+  @apply first:ml-0 last:mr-0 m-2;
+}
+
+.pad--play {
+  @apply h-24 w-24;
+}
+
+.pad--option {
+  @apply h-12 w-24;
+}
+
 .pad > .pad--pressed {
   @apply text-neutral bg-neutral-content;
   @apply hover:text-neutral hover:bg-neutral-content;
