@@ -1,18 +1,73 @@
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+
 class SamplerEngine {
+  currentInstrumentIndex = -1;
+  instruments = [
+    {
+      name: 'Piano',
+      path: 'assets/samples/piano.wav',
+    },
+    {
+      name: 'Drum',
+      path: 'assets/samples/drum.wav',
+    },
+    {
+      name: 'Girl Scream',
+      path: 'assets/samples/girl-scream.wav',
+    },
+  ];
+
   constructor() {
     this.name = 'Sampler';
-    this.instrument = '-';
+    this.audioCtx = new AudioContext();
+    this.changeInstrument();
   }
 
   onPadPressed(padIndex) {
     console.log(`Pad ${padIndex} pushed from the Sampler engine`);
 
-    // Implement here the logic to produce Sound based on the Pad Index (int)
+    // TODO: Play in correct notes
+    this._play(padIndex / 15);
   }
 
   changeInstrument() {
-    console.log('Changed instrument for the Sampler');
-    this.instrument = 'A new instrument!';
+    this.currentInstrumentIndex++;
+    if (this.currentInstrumentIndex > this.instruments.length - 1) {
+      this.currentInstrumentIndex = 0;
+    }
+    const instrumentData = this.instruments[this.currentInstrumentIndex];
+    this._loadSample(instrumentData.path).then(
+      (sample) => (this.sample = sample)
+    );
+    this.instrument = instrumentData.name;
+  }
+
+  _play(rate) {
+    if (this.sample == null) return;
+
+    const context = this.audioCtx;
+    const source = context.createBufferSource();
+    const time = context.currentTime;
+    source.buffer = this.sample;
+    source.playbackRate.value = rate;
+    source.connect(context.destination);
+    source.start(time);
+  }
+
+  async _loadSample(url) {
+    const context = this.audioCtx;
+    if (context.decodeAudioData.length !== 1) {
+      const originalDecodeAudioData = context.decodeAudioData.bind(context);
+      context.decodeAudioData = (buffer) =>
+        new Promise((resolve, reject) =>
+          originalDecodeAudioData(buffer, resolve, reject)
+        );
+    }
+
+    const response = await fetch(url);
+    const buffer = await response.arrayBuffer();
+
+    return await context.decodeAudioData(buffer);
   }
 }
 
