@@ -1,5 +1,5 @@
 .pad {
-  @apply p-4 rounded bg-accent-content text-accent;
+  @apply cursor-pointer p-4 rounded bg-accent-content text-accent;
   @apply hover:text-secondary hover:bg-secondary-content;
   @apply active:text-neutral active:bg-neutral-content;
   @apply first:ml-0 last:mr-0 m-2;
