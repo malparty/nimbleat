@@ -154,15 +154,10 @@ class BaseScreen {
       return pad;
     });
 
-    this.jogDisplay = this.jogElements.map((jogElement, i) => {
-      const jogDisplay = new JogDisplay(jogElement);
-      jogDisplay.setText('Hello' + i);
-      jogDisplay.setOnPlayed(() => {
-        this._onJogPlayed(i);
-      });
-
-      return jogDisplay;
-    });
+    // Show Jog Display
+    this.jogDisplay = this.jogElements.map(
+      (jogElement) => new JogDisplay(jogElement)
+    );
 
     this._refreshDisplays();
   }

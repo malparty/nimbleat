@@ -1,29 +1,43 @@
+
 export const DEFAULT_SELECTOR = '.jog-display';
 
 const CLASS_NAMES = {
   textElement: '.jog-display__text'
 };
 
+// Set Audio Context
+const audioContextJog = new AudioContext();
+// Set Sample Music
+const sampleJogMusic = new Audio("./assets/samples/milk-shake.mp3");
+// Add Sample Music to source to play on the destination
+const sourceJog = audioContextJog.createMediaElementSource(sampleJogMusic);
+sourceJog.connect(audioContextJog.destination);
+
+
 const template = document.createElement('template');
 template.innerHTML = `
+
 <div class="py-5 flex items-center justify-center space-x-8">
-<div id="drop-area" class="relative w-72 h-72 bg-purple-300 rounded-full flex justify-center items-center text-center p-5 shadow-xl">
-  <form class="my-form">
-    <label class="button" for="fileElem">Select your Music</label>
-  </form>
-  <div class="jog-display__text"></div>
+  <div id="drop-area" class="relative w-72 h-72 bg-purple-300 rounded-full flex justify-center items-center text-center p-5 shadow-xl">
+    <form class="my-form">
+      <label class="button" for="fileElem">Select your Music</label>
+    </form> 
+  </div>
 </div>
+<div class="py-5 flex items-center justify-center space-x-8">
+    <p class="underline decoration-1"> Let's play our sample music ⚡🎧 </p>
+    <button class="btn btn-primary m-4 play">Play</button>
+    <button class="btn btn-primary m-4 pause">Pause</button>
 </div>
+
 `;
 
 class JogDisplay {
   constructor(elementRef) {
     this.jogDisplay = elementRef;
-
     // Insert HTML content from template
     this.jogDisplay.appendChild(template.content.cloneNode(true));
-
-    this.textElement = this.jogDisplay.querySelector(CLASS_NAMES.textElement) ?? new Element();
+    // this.textElement = this.jogDisplay.querySelector(CLASS_NAMES.textElement) ?? new Element();
 
     this._bind();
     this._setup();
@@ -37,14 +51,6 @@ class JogDisplay {
   }
 
   // Object interface for external usage
-
-  /**
-   * @param {*} text: text to be displayed within the jog display
-   */
-  setText(text) {
-    this.textElement.innerHTML = text;
-  }
-
   /**
    * Trigger a Play button action
    * @param {*} callback: function to be called when the jog display is triggered
@@ -72,9 +78,22 @@ class JogDisplay {
     // dropArea.addEventListener('dragleave', handlerFunction, false);
     // dropArea.addEventListener('dragover', handlerFunction, false);
     // dropArea.addEventListener('drop', handlerFunction, false);
-    this.jogDisplay.addEventListener('mousedown', this.onJogDisplayClicked);
-  }
 
+    let playBtn = document.querySelector(".play");
+    let pauseBtn = document.querySelector(".pause");
+    // Play sample jog
+    playBtn.addEventListener('click', () => {
+      if(audioContextJog.state==="suspended"){
+        audioContextJog.resume();
+        console.log(audioContextJog);
+      }
+      sampleJogMusic.play();
+    })
+    // Pause sample jog
+    pauseBtn.addEventListener('click', () => {
+      sampleJogMusic.pause();
+    })
+  }
 }
 
 export default JogDisplay;
