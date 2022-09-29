@@ -13,7 +13,7 @@
   @apply h-12 w-24;
 }
 
-.pad > .pad--pressed {
+.pad.pad--pressed {
   @apply text-neutral bg-neutral-content;
   @apply hover:text-neutral hover:bg-neutral-content;
 }

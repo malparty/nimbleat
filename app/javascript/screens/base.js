@@ -1,7 +1,6 @@
 import Pad, { DEFAULT_SELECTOR as PAD_SELECTOR } from '../components/pad/';
 import getSoundEngines from '../sound-engines';
 import { KeyMap } from '../utilities/keyMap';
-import { chromatic } from '../utilities/scales';
 
 const SELECTORS = {
   screen: '#base-screen',
@@ -86,6 +85,7 @@ class BaseScreen {
   onStart() {
     // Insert HTML content from template
     this.baseScreen.appendChild(template.content.cloneNode(true));
+    this.baseScreen.removeChild(this.baseScreen.firstElementChild);
 
     this.padsElements = Array.from(document.querySelectorAll(SELECTORS.playPad));
     this.padInstrument = document.querySelector(SELECTORS.padInstrument);
@@ -111,7 +111,7 @@ class BaseScreen {
     this._refreshDisplays();
   }
 
-  padInstrumentOnClick(e) {
+  padInstrumentOnClick() {
     if (this.currentSoundEngine.changeInstrument) {
       this.currentSoundEngine.changeInstrument();
 
@@ -157,7 +157,7 @@ class BaseScreen {
 
   _onPadPlayed(padIndex) {
     // Handle Scales here (and add frequency as second arg)
-    this.currentSoundEngine.onPadPressed(padIndex, chromatic[padIndex]);
+    this.currentSoundEngine.onPadPressed(padIndex);
   }
 
   _refreshDisplays() {

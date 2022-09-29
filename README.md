@@ -16,8 +16,9 @@ npm run dev
 
 ## Build
 
-WIP
-
+````
+npm run build
+````
 
 ## License
 
