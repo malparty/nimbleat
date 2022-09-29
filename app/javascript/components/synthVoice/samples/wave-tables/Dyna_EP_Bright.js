@@ -1,4 +1,9 @@
-export default { 'real' : [
+export default {
+  'a' : 0.1,
+  'd' : 0.3,
+  'r' : 0.2,
+  'scale_ref' : 'chromatic3',
+  'real' : [
 0.000000,
 0.126773,
 0.017974,

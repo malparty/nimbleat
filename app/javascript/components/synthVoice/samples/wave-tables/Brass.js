@@ -1,4 +1,9 @@
-export default { 'real' : [
+export default {
+  'a' : 0.2,
+  'd' : 0.8,
+  'r' : 0.4,
+  'scale_ref' : 'pentagonic',
+  'real' : [
 0.000000,
 -0.051411,
 -0.085181,

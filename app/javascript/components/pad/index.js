@@ -31,9 +31,9 @@ class Pad {
 
   onPadClicked() {
     this._onPlayedCallback();
-    this.padContainer.classList.add('pad--pressed');
+    this.pad.classList.add('pad--pressed');
     setTimeout(() => {
-      this.padContainer.classList.remove('pad--pressed');
+      this.pad.classList.remove('pad--pressed');
     }, 200);
   }
 
