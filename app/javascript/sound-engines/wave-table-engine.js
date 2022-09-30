@@ -52,12 +52,12 @@ class WaveTableEngine {
     this.decay = waveTable.d;
     this.release = waveTable.r;
     if (Scales[waveTable.scale_ref]) {
-      this.scale = Scales[waveTable.scale_ref]
+      this.scale = Scales[waveTable.scale_ref];
     }
 
     this.wave = new PeriodicWave(this.audioCtx, {
       real: waveTable.real,
-      imag: waveTable.imag
+      imag: waveTable.imag,
     });
   }
 
@@ -65,7 +65,7 @@ class WaveTableEngine {
     const osc = new OscillatorNode(this.audioCtx, {
       frequency: freq,
       type: 'custom',
-      periodicWave: this.wave
+      periodicWave: this.wave,
     });
 
     const time = this.audioCtx.currentTime;
@@ -73,7 +73,10 @@ class WaveTableEngine {
     sweepEnv.gain.cancelScheduledValues(time);
     sweepEnv.gain.setValueAtTime(GAIN_OFF, time);
     sweepEnv.gain.linearRampToValueAtTime(GAIN_ON, time + this.attack);
-    sweepEnv.gain.linearRampToValueAtTime(GAIN_OFF, time + this.attack + this.decay + this.release);
+    sweepEnv.gain.linearRampToValueAtTime(
+      GAIN_OFF,
+      time + this.attack + this.decay + this.release
+    );
 
     osc.connect(sweepEnv).connect(this.audioCtx.destination);
     osc.start(time); // Starts now

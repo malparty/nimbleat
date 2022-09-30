@@ -1,6 +1,9 @@
 import Pad, { DEFAULT_SELECTOR as PAD_SELECTOR } from '../components/pad/';
 import getSoundEngines from '../sound-engines';
 import { KeyMap } from '../utilities/keyMap';
+import JogDisplay, {
+  DEFAULT_SELECTOR as JOG_DISPLAY_SELECTOR,
+} from '../components/jogDisplay';
 
 const SELECTORS = {
   screen: '#base-screen',
@@ -12,7 +15,7 @@ const SELECTORS = {
   padInstrument: '#pad_instrument',
 
   displayMode: '#display_mode',
-  displayInstrument: '#display_instrument'
+  displayInstrument: '#display_instrument',
 };
 
 const splash = document.createElement('template');
@@ -59,6 +62,7 @@ template.innerHTML = `
       <div class="pad pad--play flex-1" id="pad_15"></div>
       <div class="pad pad--play flex-1" id="pad_16"></div>
     </div>
+    <div class ="jog-display" id="jog_display"></div>
   </div>
 `;
 
@@ -87,11 +91,18 @@ class BaseScreen {
     this.baseScreen.appendChild(template.content.cloneNode(true));
     this.baseScreen.removeChild(this.baseScreen.firstElementChild);
 
-    this.padsElements = Array.from(document.querySelectorAll(SELECTORS.playPad));
+    this.padsElements = Array.from(
+      document.querySelectorAll(SELECTORS.playPad)
+    );
     this.padInstrument = document.querySelector(SELECTORS.padInstrument);
     this.padMode = document.querySelector(SELECTORS.padMode);
-    this.displayInstrument = document.querySelector(SELECTORS.displayInstrument);
+    this.displayInstrument = document.querySelector(
+      SELECTORS.displayInstrument
+    );
     this.displayMode = document.querySelector(SELECTORS.displayMode);
+    this.jogElements = Array.from(
+      document.querySelectorAll(JOG_DISPLAY_SELECTOR)
+    );
 
     this.soundEngines = getSoundEngines();
 
@@ -141,6 +152,11 @@ class BaseScreen {
 
       return pad;
     });
+
+    // Show Jog Display
+    this.jogDisplay = this.jogElements.map(
+      (jogElement) => new JogDisplay(jogElement)
+    );
 
     this._refreshDisplays();
   }
