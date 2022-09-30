@@ -74,10 +74,6 @@ class BaseScreen {
     this.baseScreen.appendChild(splash.content.cloneNode(true));
 
     this.startButton = document.querySelector(SELECTORS.startButton);
-    this.padsElements = Array.from(document.querySelectorAll(PAD_SELECTOR));
-    this.jogElements = Array.from(
-      document.querySelectorAll(JOG_DISPLAY_SELECTOR)
-    );
 
     this._bind();
     this._addSplashEventListeners();
@@ -104,6 +100,9 @@ class BaseScreen {
       SELECTORS.displayInstrument
     );
     this.displayMode = document.querySelector(SELECTORS.displayMode);
+    this.jogElements = Array.from(
+      document.querySelectorAll(JOG_DISPLAY_SELECTOR)
+    );
 
     this.soundEngines = getSoundEngines();
 

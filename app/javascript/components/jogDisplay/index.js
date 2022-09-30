@@ -1,18 +1,12 @@
-
 export const DEFAULT_SELECTOR = '.jog-display';
-
-const CLASS_NAMES = {
-  textElement: '.jog-display__text'
-};
 
 // Set Audio Context
 const audioContextJog = new AudioContext();
 // Set Sample Music
-const sampleJogMusic = new Audio("./assets/samples/milk-shake.mp3");
+const sampleJogMusic = new Audio('./assets/samples/milk-shake.mp3');
 // Add Sample Music to source to play on the destination
 const sourceJog = audioContextJog.createMediaElementSource(sampleJogMusic);
 sourceJog.connect(audioContextJog.destination);
-
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -20,8 +14,8 @@ template.innerHTML = `
 <div class="py-5 flex items-center justify-center space-x-8">
   <div id="drop-area" class="relative w-72 h-72 bg-purple-300 rounded-full flex justify-center items-center text-center p-5 shadow-xl">
     <form class="my-form">
-      <label class="button" for="fileElem">Select your Music</label>
-    </form> 
+      <label class="button" for="fileElem">Select your Music <br />(not implemented yet)</label>
+    </form>
   </div>
 </div>
 <div class="py-5 flex items-center justify-center space-x-8">
@@ -67,32 +61,35 @@ class JogDisplay {
 
   _setup() {
     this._onPlayedCallback = () => {
-      console.log('OnPlayedCallback not assigned to jog display: ', this.jogDisplay);
+      console.log(
+        'OnPlayedCallback not assigned to jog display: ',
+        this.jogDisplay
+      );
     };
   }
 
   _addEventListeners() {
     this.jogDisplay.addEventListener('mousedown', this.onJogDisplayClicked);
-    let dropArea = document.getElementById('drop-area');
+    // let dropArea = document.getElementById('drop-area');
     // dropArea.addEventListener('dragenter', handlerFunction, false);
     // dropArea.addEventListener('dragleave', handlerFunction, false);
     // dropArea.addEventListener('dragover', handlerFunction, false);
     // dropArea.addEventListener('drop', handlerFunction, false);
 
-    let playBtn = document.querySelector(".play");
-    let pauseBtn = document.querySelector(".pause");
+    let playBtn = document.querySelector('.play');
+    let pauseBtn = document.querySelector('.pause');
     // Play sample jog
     playBtn.addEventListener('click', () => {
-      if(audioContextJog.state==="suspended"){
+      if (audioContextJog.state === 'suspended') {
         audioContextJog.resume();
         console.log(audioContextJog);
       }
       sampleJogMusic.play();
-    })
+    });
     // Pause sample jog
     pauseBtn.addEventListener('click', () => {
       sampleJogMusic.pause();
-    })
+    });
   }
 }
 
